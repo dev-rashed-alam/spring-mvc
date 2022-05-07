@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +21,10 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Manage <b>Employees</b></h2>
+                        <h2>Manage Employees</h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#" class="btn btn-success">
+                        <a href="addEmployee" class="btn btn-success">
                             <i class="material-icons">&#xE147;</i>
                             <span>Add New Employee</span>
                         </a>
@@ -41,26 +42,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Thomas Hardy</td>
-                    <td>thomashardy@mail.com</td>
-                    <td>89 Chiaroscuro Rd, Portland, USA</td>
-                    <td>(171) 555-2222</td>
-                    <td>
-                        <a href="#" class="edit">
-                            <i class="material-icons"
-                               data-toggle="tooltip"
-                               title="Edit">&#xE254;
-                            </i>
-                        </a>
-                        <a href="#" class="delete">
-                            <i class="material-icons"
-                               data-toggle="tooltip"
-                               title="Delete">&#xE872;
-                            </i>
-                        </a>
-                    </td>
-                </tr>
+                <c:forEach var="employee" items="${employees}">
+                    <tr>
+                        <td>${employee.name}</td>
+                        <td>${employee.email}</td>
+                        <td>${employee.address}</td>
+                        <td>${employee.phone}</td>
+                        <td>
+                            <a href="#" class="edit">
+                                <i class="material-icons">&#xE254;</i>
+                            </a>
+                            <a href="#" class="delete">
+                                <i class="material-icons">&#xE872;</i>
+                            </a>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
