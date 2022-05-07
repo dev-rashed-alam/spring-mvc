@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,26 +23,60 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Add new employee</h2>
+                        <h2>${actionType == "addEmployee" ? "Add New Employee" : "Update Employee"}</h2>
                     </div>
                 </div>
             </div>
-            <form:form action="saveEmployee" method="post" modelAttribute="employee">
+            <form:form
+                    action="${actionType == 'addEmployee' ? '/saveEmployee' : '/updateEmployee'}"
+                    method="post"
+                    modelAttribute="employee"
+            >
+                <form:input
+                        path="id"
+                        value="${employee.id}"
+                        type="hidden"
+                        class="form-control"
+                />
                 <div class="form-group">
                     <label>Name</label>
-                    <form:input path="name" type="text" class="form-control" required="true"/>
+                    <form:input
+                            path="name"
+                            value="${employee.name}"
+                            type="text"
+                            class="form-control"
+                            required="true"
+                    />
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <form:input path="email" type="text" class="form-control" required="true"/>
+                    <form:input
+                            path="email"
+                            value="${employee.email}"
+                            type="text"
+                            class="form-control"
+                            required="true"
+                    />
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <form:textarea path="address" type="text" class="form-control" required="true"/>
+                    <form:textarea
+                            path="address"
+                            value="${employee.address}"
+                            type="text"
+                            class="form-control"
+                            required="true"
+                    />
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
-                    <form:input path="phone" type="text" class="form-control" required="true"/>
+                    <form:input
+                            path="phone"
+                            value="${employee.phone}"
+                            type="text"
+                            class="form-control"
+                            required="true"
+                    />
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-success" value="Save">
