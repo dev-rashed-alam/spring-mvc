@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dao.DbManager;
 import com.example.model.EmployeeModel;
 import org.springframework.stereotype.Service;
 
@@ -10,35 +11,39 @@ import java.util.UUID;
 
 @Service
 public class EmployeeService {
-    private final List<EmployeeModel> listOfEmployee = new ArrayList<>();
 
     public List<EmployeeModel> getListOfEmployee() {
-        return listOfEmployee;
+        return DbManager.findAll();
     }
 
     public void save(EmployeeModel employee) {
-        String uId = UUID.randomUUID().toString();
-        employee.setId(uId);
-        listOfEmployee.add(employee);
+        int status = DbManager.save(employee);
+        if (status == 0) {
+            System.out.println("Unable to save data!");
+        } else {
+            System.out.println("Data save successful!");
+        }
     }
 
     public Optional<EmployeeModel> findById(String id) {
-        return listOfEmployee.stream().filter(employeeModel -> employeeModel.getId().equals(id)).findFirst();
+        return Optional.ofNullable(DbManager.findById(id));
     }
 
     public void update(EmployeeModel employee) {
-        for(EmployeeModel employeeModel : listOfEmployee){
-            if(employeeModel.getId().equals(employee.getId())){
-                employeeModel.setEmail(employee.getEmail());
-                employeeModel.setName(employee.getName());
-                employeeModel.setAddress(employee.getAddress());
-                employeeModel.setPhone(employee.getPhone());
-                break;
-            }
+        int status = DbManager.update(employee);
+        if (status == 0) {
+            System.out.println("Failed to Update employee!");
+        } else {
+            System.out.println("Employee update successful!");
         }
     }
 
     public void deleteById(String id) {
-        listOfEmployee.removeIf(employeeModel -> employeeModel.getId().equals(id));
+       int status = DbManager.deleteById(id);
+        if (status == 0) {
+            System.out.println("Failed to delete employee!");
+        } else {
+            System.out.println("Employee delete successful!");
+        }
     }
 }
